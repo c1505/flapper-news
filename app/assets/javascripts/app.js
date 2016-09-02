@@ -1,4 +1,16 @@
-angular.module('flapperNews', [])
+angular.module('flapperNews', ['ui.router'])
+.config([
+'$stateProvider',
+'$urlRouterProvider',
+function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/home',
+      templateUrl: '/home.html',
+      controller: 'MainCtrl'
+    });
+  $urlRouterProvider.otherwise('home');
+}])
 .factory('posts', [function(){
     var o = {
         posts: []
@@ -9,6 +21,7 @@ angular.module('flapperNews', [])
 '$scope',
 'posts',
 function($scope, posts){
+    $scope.posts = posts.posts;
     $scope.test = 'Hello world';
     $scope.posts = [
   {title: 'post 1', upvotes: 5},
@@ -30,5 +43,5 @@ function($scope, posts){
     };
     $scope.incrementUpvotes = function(post) {
         post.upvotes += 1;
-    }
+    };
 }]);
